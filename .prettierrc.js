@@ -1,0 +1,23 @@
+module.exports = {
+  tabWidth: 2,
+  singleQuote: true,
+  printWidth: 100,
+  jsxSingleQuote: true,
+  trailingComma: 'all',
+  jsxBracketSameLine: true,
+  arrowParens: 'always',
+  jsxSingleQuote: false,
+  importOrder: [
+    '^react',
+    '^(react$)|^(react(.*)$)|^(@react(.*)$)',
+    '<THIRD_PARTY_MODULES>',
+    'screens(.*)$',
+    'components(.*)$',
+    'common(.*)$',
+    'res(.*)$',
+    'types(.*)$',
+    '^[./]',
+  ],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
+};
