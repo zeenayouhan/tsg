@@ -6,7 +6,12 @@ export default class CommonAPI {
   static getAllProducts = () => {
     return request(ENDPOINTS.GET_ALL_PRODUCTS, 'GET');
   };
+
   static fetchProducts = (payload: SearchProduct) => {
     return request(ENDPOINTS.SEARCH_PRODUCT, 'GET', payload);
+  };
+
+  static getProduct = (payload: number) => {
+    return request(`${ENDPOINTS.GET_ALL_PRODUCTS}/${payload}`, 'GET');
   };
 }

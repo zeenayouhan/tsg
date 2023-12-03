@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProduct, getAllProducts } from '../common/actions/common.actions';
-import { productSelector } from '../common/selectors/product.selectors';
-import { Box, Card, CardContent, CardMedia, Grid, Rating, TextField, Typography } from '@mui/material';
+import { fetchProduct, getAllProducts, getProduct, } from '../common/actions/common.actions';
+import { productSelector, productsSelector } from '../common/selectors/product.selectors';
+import { Box, Button, Card, CardContent, CardMedia, Dialog, DialogContent, DialogTitle, Grid, Rating, TextField, Typography } from '@mui/material';
 import './Home.css'; // Import the CSS file
 import SearchIcon from '@mui/icons-material/Search';
 
+
 const Home: React.FC = () => {
   const dispatch = useDispatch();
-  const productSelectors = useSelector(productSelector);
+  const products = useSelector(productsSelector);
+  const product= useSelector(productSelector);
   const [searchItem, setSearchItem] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -18,6 +22,12 @@ const Home: React.FC = () => {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>)=>{
     setSearchItem(event.target.value);
     dispatch(fetchProduct({limit:12, skip:0, q: searchItem}));
+  }
+  console.log("fff", product)
+
+  const handleOnClick = (id: number)=>{
+    setIsModalOpen(true)
+    dispatch(getProduct(id));
   }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -34,10 +44,10 @@ const Home: React.FC = () => {
     <Grid container>
       
 
-      {productSelectors &&
-        productSelectors.map((product) => (
+      {products&&
+        products.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={3}>
-            <Card style={{ minHeight: '450px' }} className={'hover-card'}>
+            <Card style={{ minHeight: '460px' }} className={'hover-card'} onClick={()=>handleOnClick(product.id)}>
               <CardMedia component="img" height="300" image={product.thumbnail} />
               <CardContent>
                 <Typography variant="h5" fontWeight="bold">
@@ -73,7 +83,17 @@ const Home: React.FC = () => {
                 </Grid>
               </CardContent>
 
-              {/* {product && product.images.length > 0 && (
+            </Card>
+          </Grid>
+        ))}
+    </Grid>
+    <Dialog open={isModalOpen} onClose={()=>{setIsModalOpen(false)}}>
+    <DialogTitle variant="h5">{product?.brand}</DialogTitle>
+        <DialogTitle variant="h6">{product?.title}</DialogTitle>
+        <DialogContent>
+         
+          <p>{product?.description}</p>
+             {product && product.images.length > 0 && (
         <Grid container spacing={2}>
           {product.images.map((image, index) => (
             <Grid item key={index} xs={12} sm={3}>
@@ -83,12 +103,10 @@ const Home: React.FC = () => {
                 image={image.toString()}
               />
             </Grid>
-          ))}</Grid>)} */}
-              {/* Add more details as needed */}
-            </Card>
-          </Grid>
-        ))}
-    </Grid>
+          ))}</Grid>)}
+        </DialogContent>
+        <Button onClick={()=>{setIsModalOpen(false)}}>Close</Button>
+      </Dialog>
     </div>
   );
 };

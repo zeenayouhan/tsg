@@ -3,6 +3,7 @@ import { ACTIONS } from '../actions/actionTypes';
 
 const INITIAL_STATE: CommonReducer = {
   products: null,
+  product: null,
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -15,6 +16,11 @@ export default (
       return {
         ...state,
         products: payload as productPayload[],
+      };
+    case ACTIONS.SET_PRODUCT:
+      return {
+        ...state,
+        product: payload as productPayload,
       };
     default:
       return {

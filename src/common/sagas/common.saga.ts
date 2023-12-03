@@ -1,5 +1,5 @@
 import { call, put, takeLeading } from 'redux-saga/effects';
-import { SearchProduct, productsPayload } from '../../types';
+import { SearchProduct, productPayload, productsPayload } from '../../types';
 import { ACTIONS } from '../actions/actionTypes';
 import CommonAPI from '../api/common.api';
 
@@ -30,7 +30,25 @@ function* fetchProducts({
     console.log('error', error);
   }
 }
+
+function* getProduct({
+  success,
+  payload,
+}: {
+  payload: number;
+  type: ACTIONS.GET_PRODUCT;
+  success: () => void;
+}) {
+  try {
+    const data: productPayload = yield call(CommonAPI.getProduct, payload);
+    yield put({ type: ACTIONS.SET_PRODUCT, payload: data });
+    success();
+  } catch (error) {
+    console.log('error', error);
+  }
+}
 export default function* CommonSaga() {
   yield takeLeading(ACTIONS.GET_ALL_PRODUCTS, getAllProducts);
   yield takeLeading(ACTIONS.FETCH_PRODUCT, fetchProducts);
+  yield takeLeading(ACTIONS.GET_PRODUCT, getProduct);
 }

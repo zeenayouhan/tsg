@@ -9,3 +9,8 @@ export const fetchProduct = (payload: SearchProduct) => ({
   type: ACTIONS.FETCH_PRODUCT,
   payload: payload,
 });
+
+export const getProduct = (payload: number) => ({
+  type: ACTIONS.GET_PRODUCT,
+  payload: payload,
+});

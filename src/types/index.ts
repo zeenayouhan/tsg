@@ -3,6 +3,7 @@ export type Reducers = {
 };
 export type CommonReducer = {
   products: productPayload[] | null;
+  product: productPayload | null;
 };
 
 export type productsPayload = {
