@@ -22,3 +22,9 @@ export type productPayload = {
   thumbnail: string;
   images: String[];
 };
+
+export type SearchProduct = {
+  limit: number;
+  skip: number;
+  q: string;
+};

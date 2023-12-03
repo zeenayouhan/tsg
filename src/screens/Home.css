@@ -1,0 +1,4 @@
+.hover-card:hover {
+  background: linear-gradient(to top left, #ffffff 0%, #ccffff 100%);
+  cursor: pointer;
+}

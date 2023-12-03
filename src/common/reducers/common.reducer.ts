@@ -12,7 +12,6 @@ export default (
 ): CommonReducer => {
   switch (type) {
     case ACTIONS.SET_ALL_PRODUCTS:
-      console.log('Ff===>', payload);
       return {
         ...state,
         products: payload as productPayload[],
